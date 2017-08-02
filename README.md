@@ -11,3 +11,8 @@
 理解闭包
 
 LEGI原则： `locals -> enclosing function -> globals -> __builtins__`
+
+## 协程vs多线程vs多进程
+* 协程用的是gevent库
+* 简单测试同一个任务用三种不同的形式执行效率
+* monkey的patch对线程池的使用有影响，所以分开执行
