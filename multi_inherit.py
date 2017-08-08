@@ -1,25 +1,25 @@
 class A:
 
     def bar(self):
-        print 'A.bar'
+        print('A.bar')
 
     def foo(self):
-        print 'A.foo'
+        print('A.foo')
 
 
 class B(A):
 
     def bar(self):
-        print 'B.bar'
+        print('B.bar')
 
 
 class C(A):
 
     def bar(self):
-        print 'C.bar'
+        print('C.bar')
 
     def foo(self):
-        print 'C.foo'
+        print('C.foo')
 
 
 class D(B, C):
@@ -29,25 +29,25 @@ class D(B, C):
 class NewBase(object):
 
     def bar(self):
-        print 'Base.bar'
+        print('Base.bar')
 
     def foo(self):
-        print 'Base.foo'
+        print('Base.foo')
 
 
 class New1(NewBase):
 
     def bar(self):
-        print 'New1.bar'
+        print('New1.bar')
 
 
 class New2(NewBase):
 
     def bar(self):
-        print 'New2.bar'
+        print('New2.bar')
 
     def foo(self):
-        print 'New2.foo'
+        print('New2.foo')
 
 
 class New3(New1, New2):
@@ -55,13 +55,13 @@ class New3(New1, New2):
 
 
 if __name__ == '__main__':
-    print 'old class:'
+    print('old class:')
     # DFS
     # search order: D -> B -> A -> C
     d = D()
     d.bar()
     d.foo()
-    print 'new class:'
+    print('new class:')
     # BFS
     # search order New3 -> New1 -> New2 -> BaseNew
     n = New3()

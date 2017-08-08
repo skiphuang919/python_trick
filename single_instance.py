@@ -29,8 +29,8 @@ class MyClass2(SingletonClass):
 if __name__ == '__main__':
     c1 = MyClass(1)
     c2 = MyClass(2)
-    print 'c1 is c2: {}'.format(c1 is c2)
+    print('c1 is c2: {}'.format(c1 is c2))
 
     c1 = MyClass2(1)
     c2 = MyClass2(2)
-    print 'c1 is c2: {}'.format(c1 is c2)
+    print('c1 is c2: {}'.format(c1 is c2))
