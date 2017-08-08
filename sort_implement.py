@@ -30,10 +30,37 @@ class SortMethods(object):
                 j -= 1
         return tmp_list
 
+    @time_wrap
+    def bubble_sort(self):
+        tmp_list = copy.deepcopy(self.list_to_sort)
+        count = len(tmp_list)
+
+        for i in range(count):
+            for j in range(i+1, count):
+                if tmp_list[j] < tmp_list[i]:
+                    tmp_list[j], tmp_list[i] = tmp_list[i], tmp_list[j]
+        return tmp_list
+
+    @time_wrap
+    def select_sort(self):
+        tmp_list = copy.deepcopy(self.list_to_sort)
+        count = len(tmp_list)
+
+        for i in range(count):
+            min_i = i
+            for j in range(i+1, count):
+                if tmp_list[j] < tmp_list[min_i]:
+                    min_i = j
+            tmp_list[i], tmp_list[min_i] = tmp_list[min_i], tmp_list[i]
+
+        return tmp_list
+
 
 if __name__ == '__main__':
     l = [87, 3, 44, 1, 4, 123, 99, 7, 8, 3, 0, 11, 4]
     sm = SortMethods(l)
     sm.insert_sort()
+    sm.bubble_sort()
+    sm.select_sort()
 
 
