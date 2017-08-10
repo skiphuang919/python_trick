@@ -36,9 +36,9 @@ class SortMethods(object):
         count = len(tmp_list)
 
         for i in range(count):
-            for j in range(i+1, count):
-                if tmp_list[j] < tmp_list[i]:
-                    tmp_list[j], tmp_list[i] = tmp_list[i], tmp_list[j]
+            for j in range(count-i-1):
+                if tmp_list[j+1] < tmp_list[j]:
+                    tmp_list[j], tmp_list[j+1] = tmp_list[j+1], tmp_list[j]
         return tmp_list
 
     @time_wrap
