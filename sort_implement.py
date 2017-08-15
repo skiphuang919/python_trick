@@ -72,7 +72,38 @@ class SortMethods(object):
             sys.setrecursionlimit()
          but this is not recommend.
         """
-        return self._quick_sort(self.list_to_sort)
+        return self._quick_sort(copy.deepcopy(self.list_to_sort))
+
+    @staticmethod
+    def merge(left, right):
+        i, j = 0, 0
+        result = []
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result += left[i:]
+        result += right[j:]
+        return result
+
+    def _merge_sort(self, list_to_sort):
+        if len(list_to_sort) <= 1:
+            return list_to_sort
+        num = int(len(list_to_sort) / 2)
+        left = self._merge_sort(list_to_sort[:num])
+        right = self._merge_sort(list_to_sort[num:])
+        return self.merge(left, right)
+
+    @time_wrap
+    def merge_sort(self):
+        """
+        attention the recursion limit
+        """
+        return self._merge_sort(copy.deepcopy(self.list_to_sort))
+
 
 if __name__ == '__main__':
     l = [87, 3, 44, 1, 4, 123, 99, 7, 8, 3, 0, 11, 4]
@@ -81,5 +112,6 @@ if __name__ == '__main__':
     sm.bubble_sort()
     sm.select_sort()
     sm.quick_sort()
+    sm.merge_sort()
 
 
