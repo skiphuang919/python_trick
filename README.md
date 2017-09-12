@@ -27,7 +27,9 @@ LEGI原则： `locals -> enclosing function -> globals -> __builtins__`
 
 ### BFS
 新式类MRO,广度优先搜索（子节点顺序：从左到右）
-
+```
+A.__mro__ 可以查看新式类的顺序
+```
 缺点：
 违背单调性
 
