@@ -3,6 +3,16 @@ import reprlib
 
 RE_WORD = re.compile('\w+')
 
+
+####################################
+#                                  #
+#           Iterable Obj           #
+#           Iterator               #
+#           Generator              #
+#                                  #
+####################################
+
+
 # -------v1-------
 
 
