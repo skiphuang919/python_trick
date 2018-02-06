@@ -1,4 +1,5 @@
 import threading
+from queue import Queue
 import time
 import random
 
@@ -105,6 +106,30 @@ class EventCli(threading.Thread):
         print('{} send {}'.format(self.name, v))
 
 
+class Producer(threading.Thread):
+    def __init__(self, queue):
+        super(Producer, self).__init__()
+        self.queue = queue
+        self.name = 'producer'
+
+    def run(self):
+        for i in range(5):
+            self.queue.put(i)
+            time.sleep(1)
+
+
+class Consumer(threading.Thread):
+    def __init__(self, queue):
+        super(Consumer, self).__init__()
+        self.queue = queue
+
+    def run(self):
+        while 1:
+            v = self.queue.get()
+            print('{} consume {}'.format(self.name, v))
+            time.sleep(2)
+
+
 def test_lock():
     t_list = [LockDemo() for n in range(3)]
     for t in t_list:
@@ -143,8 +168,18 @@ def test_eve():
     s.start()
     c.start()
 
+
+def test_queue():
+    q = Queue(2)
+    p = Producer(q)
+    c1 = Consumer(q)
+    c2 = Consumer(q)
+    p.start()
+    c1.start()
+    c2.start()
+
 if __name__ == '__main__':
-    test_eve()
+    test_queue()
 
 
 
