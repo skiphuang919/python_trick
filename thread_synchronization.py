@@ -115,7 +115,6 @@ class Producer(threading.Thread):
     def run(self):
         for i in range(5):
             self.queue.put(i)
-            time.sleep(1)
 
 
 class Consumer(threading.Thread):
@@ -125,11 +124,17 @@ class Consumer(threading.Thread):
 
     def run(self):
         while 1:
+            time.sleep(1)
             try:
                 v = self.queue.get_nowait()
-                print('{} consume {}'.format(self.name, v))
             except Empty:
                 continue
+            else:
+                if v is not None:
+                    print('{} consume {}'.format(self.name, v))
+                    self.queue.task_done()
+                else:
+                    break
 
 
 def test_lock():
@@ -179,6 +184,10 @@ def test_queue():
     p.start()
     c1.start()
     c2.start()
+    q.join()
+    print('all task done')
+    q.put(None)
+    q.put(None)
 
 
 if __name__ == '__main__':
