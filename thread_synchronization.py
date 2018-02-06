@@ -1,5 +1,5 @@
 import threading
-from queue import Queue
+from queue import Queue, Empty
 import time
 import random
 
@@ -125,9 +125,11 @@ class Consumer(threading.Thread):
 
     def run(self):
         while 1:
-            v = self.queue.get()
-            print('{} consume {}'.format(self.name, v))
-            time.sleep(2)
+            try:
+                v = self.queue.get_nowait()
+                print('{} consume {}'.format(self.name, v))
+            except Empty:
+                continue
 
 
 def test_lock():
@@ -177,6 +179,7 @@ def test_queue():
     p.start()
     c1.start()
     c2.start()
+
 
 if __name__ == '__main__':
     test_queue()
