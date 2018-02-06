@@ -1,5 +1,6 @@
 import threading
 import time
+import random
 
 LOCK = threading.Lock()
 value = 0
@@ -72,6 +73,38 @@ class SemaphoreDemo(threading.Thread):
             SEM.release()
 
 
+EVE = threading.Event()
+msg_q = []
+
+
+class EventServer(threading.Thread):
+    def __init__(self, event):
+        super(EventServer, self).__init__()
+        self.event = event
+        self.name = 'server'
+
+    def run(self):
+        print('{} is waiting...'.format(self.name))
+        is_set = self.event.wait()
+        if is_set:
+            print('{} rec {}'.format(self.name, msg_q.pop()))
+
+
+class EventCli(threading.Thread):
+    def __init__(self, event):
+        super(EventCli, self).__init__()
+        self.event = event
+        self.name = 'client'
+        self.event.clear()
+
+    def run(self):
+        v = random.randint(0, 9)
+        msg_q.append(v)
+        time.sleep(3)
+        self.event.set()
+        print('{} send {}'.format(self.name, v))
+
+
 def test_lock():
     t_list = [LockDemo() for n in range(3)]
     for t in t_list:
@@ -103,8 +136,15 @@ def test_semaphore():
     for t in t_list:
         t.start()
 
+
+def test_eve():
+    s = EventServer(EVE)
+    c = EventCli(EVE)
+    s.start()
+    c.start()
+
 if __name__ == '__main__':
-    test_semaphore()
+    test_eve()
 
 
 
