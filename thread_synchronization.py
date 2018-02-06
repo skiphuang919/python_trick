@@ -4,8 +4,6 @@ import time
 LOCK = threading.Lock()
 value = 0
 
-COND = threading.Condition()
-
 
 class LockDemo(threading.Thread):
     def __init__(self, with_lock=False):
@@ -23,6 +21,9 @@ class LockDemo(threading.Thread):
                 value = value + i
                 value = value - i
         print('{}-->{}'.format(self.name, value))
+
+
+COND = threading.Condition()
 
 
 class Kid(threading.Thread):
@@ -51,6 +52,25 @@ class Mum(threading.Thread):
             print('{}->cooking done'.format(self.name))
             self.cond.notifyAll()
 
+SEM = threading.Semaphore(3)
+
+
+class SemaphoreDemo(threading.Thread):
+    def __init__(self):
+        super(SemaphoreDemo, self).__init__()
+
+    def run(self):
+        print('{} try to acquire resource...'.format(self.name))
+        try:
+            rc = SEM.acquire(blocking=False)
+            if rc:
+                print('{} acquire ok...'.format(self.name))
+                time.sleep(2)
+            else:
+                print('{} acquire failed...'.format(self.name))
+        finally:
+            SEM.release()
+
 
 def test_lock():
     t_list = [LockDemo() for n in range(3)]
@@ -77,8 +97,14 @@ def test_condition():
     p = Mum(COND)
     p.start()
 
+
+def test_semaphore():
+    t_list = [SemaphoreDemo() for n in range(4)]
+    for t in t_list:
+        t.start()
+
 if __name__ == '__main__':
-    test_lock()
+    test_semaphore()
 
 
 
