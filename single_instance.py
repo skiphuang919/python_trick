@@ -10,8 +10,7 @@ def singleton(cls):
 
 @singleton
 class MyClass(object):
-    def __init__(self, x):
-        self.x = x
+    pass
 
 
 class SingletonClass(object):
@@ -22,15 +21,33 @@ class SingletonClass(object):
 
 
 class MyClass2(SingletonClass):
-    def __init__(self, x):
-        self.x = x
+    pass
+
+
+class Singleton(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class MyClass3(metaclass=Singleton):
+    pass
 
 
 if __name__ == '__main__':
-    c1 = MyClass(1)
-    c2 = MyClass(2)
+    c1 = MyClass()
+    c2 = MyClass()
     print('c1 is c2: {}'.format(c1 is c2))
 
-    c1 = MyClass2(1)
-    c2 = MyClass2(2)
+    c1 = MyClass2()
+    c2 = MyClass2()
     print('c1 is c2: {}'.format(c1 is c2))
+
+    c1 = MyClass3()
+    c2 = MyClass3()
+    print('c1 is c2: {}'.format(c1 is c2))
+
+
