@@ -94,6 +94,6 @@ if __name__ == '__main__':
     a = [5, 4, 2, 1, 2, 3, 2, 1, 0, 1, 2, 4]
     c = Container(a)
     print('=' * 30)
-    c.drop_waters(100, 8)
+    c.drop_waters(5, 8)
     print('=' * 30)
     c.drop_waters(1, 100)

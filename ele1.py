@@ -83,7 +83,9 @@ def funk(menu_list=None, total_fee=None):
 if __name__ == '__main__':
     l = [0.32, 1.30, 3.37, 0.65, 0.95, 2.30, 0.31, 1.31]
     m = 2.57
-
+    print('menu_list:', l)
+    print('fee limit:', m)
+    print('='*20)
     result = funk(l, m)
     for l in result.get('data', []):
         print(l)
